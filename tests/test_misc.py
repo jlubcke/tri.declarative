@@ -1,5 +1,6 @@
 from tri.struct import Struct
-from tri.declarative import extract_subkeys, getattr_path, setattr_path, sort_after, LAST, collect_namespaces
+from tri.declarative import extract_subkeys, getattr_path, setattr_path, sort_after, LAST, collect_namespaces, shortcut, \
+    shortcuts
 
 
 def test_extract_subkeys():
@@ -93,3 +94,15 @@ def test_order_after():
     expected_order = sorted(objects, key=lambda x: x.expected_position)
     assert list(range(len(objects))) == [y.expected_position for y in expected_order], 'check expected_order'
     assert [x.expected_position for x in expected_order] == [x.expected_position for x in sort_after(objects)]
+
+
+def test_shortcut_decorator():
+    class Foo(object):
+        @staticmethod
+        @shortcut
+        def foo(**kwargs):
+            return kwargs
+
+    assert Foo.foo.name == 'foo'
+    assert Foo.foo() == {'shortcut': Foo.foo}
+    assert shortcuts(Foo) == {Foo.foo}

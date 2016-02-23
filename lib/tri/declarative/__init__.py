@@ -539,3 +539,20 @@ def sort_after(l):
     result.extend(to_be_moved_last)
 
     return result
+
+
+def shortcut(method_to_decorate):
+    @wraps(method_to_decorate)
+    def wrapper(*args, **kwargs):
+        kwargs.setdefault('shortcut', wrapper)
+        return method_to_decorate(*args, **kwargs)
+
+    wrapper.name = method_to_decorate.__name__
+    wrapper.is_shortcut = True
+
+    return wrapper
+
+
+def shortcuts(cls):
+    return {y for x, y in inspect.getmembers(cls) if hasattr(y, 'is_shortcut')}
+
