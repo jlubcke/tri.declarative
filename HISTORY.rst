@@ -1,6 +1,14 @@
 Changelog
 =========
 
+0.27.0 (----------)
+~~~~~~~~~~~~~~~~~~~
+
+* Added `Namespace` subclass of `tri.struct.Struct` to explicit capture the
+  path splitting semantics. (And added method for flattening a `Namespace` back
+  to path notation.)
+
+
 0.26.0 (2016-05-06)
 ~~~~~~~~~~~~~~~~~~~
 
