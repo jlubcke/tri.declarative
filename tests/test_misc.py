@@ -223,3 +223,9 @@ def test_dispatch():
         return title
 
     assert foo('1', '2', '3', bar__quux__title='7', baz__a='A', baz__b='B', baz__c='C') == '1235X7ABC'
+
+
+def test_setup_py():
+    from subprocess import check_output
+    import os
+    assert check_output(['./setup.py', 'check', '-sr'], cwd=os.path.dirname(os.path.dirname(__file__))) == b'running check\n'
