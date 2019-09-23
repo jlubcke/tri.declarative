@@ -15,7 +15,7 @@ from tri_struct import (
     Frozen,
 )
 
-__version__ = '3.1.0'  # pragma: no mutate
+__version__ = '3.1.0'
 
 
 def with_meta(class_to_decorate=None, add_init_kwargs=True):
@@ -79,7 +79,7 @@ def creation_ordered(class_to_decorate):
 
     # noinspection PyProtectedMember
     def __lt__(self, other):
-        return self._index < other._index  # pragma: no mutate
+        return self._index < other._index
 
     setattr(class_to_decorate, '__lt__', __lt__)
 
@@ -126,7 +126,7 @@ def get_members(cls, member_class=None, is_member=None, sort_key=None, _paramete
             elif is_member is not None and is_member(obj):
                 yield name, obj
             elif type(obj) is tuple and len(obj) == 1 and isinstance(obj[0], member_class):
-                raise TypeError("'%s' is a one-tuple containing what we are looking for.  Trailing comma much?  Don't... just don't." % name)  # pragma: no mutate
+                raise TypeError("'%s' is a one-tuple containing what we are looking for.  Trailing comma much?  Don't... just don't." % name)
 
     bindings = generate_member_bindings()
 
@@ -136,7 +136,7 @@ def get_members(cls, member_class=None, is_member=None, sort_key=None, _paramete
         except AttributeError:
             if sort_key is default_sort_key:
                 raise TypeError('Missing member ordering definition. Use @creation_ordered or specify sort_key')
-            else:  # pragma: no covererage
+            else:  # pragma: no coverage
                 raise
         members.update(sorted_bindings)
     else:
@@ -306,8 +306,8 @@ _matches_cache = {}
 
 
 def matches(caller_parameters, callee_parameters):
-    cache_key = ';'.join((caller_parameters, callee_parameters))  # pragma: no mutate
-    cached_value = _matches_cache.get(cache_key, None)  # pragma: no mutate (mutation changes this to cached_value = None, which just slows down the code)
+    cache_key = ';'.join((caller_parameters, callee_parameters))
+    cached_value = _matches_cache.get(cache_key, None)  # pragma: no --- mutate (mutation changes this to cached_value = None, which just slows down the code)
     if cached_value is not None:
         return cached_value
 
@@ -326,7 +326,7 @@ def matches(caller_parameters, callee_parameters):
     else:
         result = required <= caller <= required.union(optional)
 
-    _matches_cache[cache_key] = result  # pragma: no mutate (mutation changes result to None which just makes things slower)
+    _matches_cache[cache_key] = result  # pragma: no --- mutate (mutation changes result to None which just makes things slower)
     return result
 
 
@@ -342,8 +342,8 @@ def evaluate(func_or_value, signature=None, **kwargs):
 
 
 def evaluate_recursive(func_or_value, signature=None, **kwargs):
-    if signature is None:  # pragma: no mutate
-        signature = signature_from_kwargs(kwargs)  # pragma: no mutate
+    if signature is None:
+        signature = signature_from_kwargs(kwargs)
 
     if isinstance(func_or_value, dict):
         # The type(item)(** stuff is to preserve the original type
@@ -421,7 +421,7 @@ class Namespace(Struct):
         if delimiter:
             if isinstance(existing, str):
                 warnings.warn('Deprecated promotion of previous string value "{0}" to dict({0}=True)'.format(existing), DeprecationWarning)
-                self[key] = Namespace({existing: True}, {rest_path: value})
+                self[key] = Namespace({existing: True}, {rest_path: value})  # pragma: no mutate
             elif isinstance(existing, dict):
                 type_of_namespace = get_type_of_namespace(existing)
                 self[key] = type_of_namespace(existing, {rest_path: value})
@@ -524,7 +524,7 @@ def class_shortcut(*args, **defaults):
         class_shortcut_wrapper.__doc__ = __target__.__doc__
         return class_shortcut_wrapper
 
-    assert len(args) in (0, 1), "There are no (explicit) positional arguments to class_shortcut"  # pragma: no mutate
+    assert len(args) in (0, 1), "There are no (explicit) positional arguments to class_shortcut"  # pragma: no --- mutate
 
     if len(args) == 1:
         return decorator(args[0])
