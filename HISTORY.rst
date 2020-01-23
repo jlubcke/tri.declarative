@@ -1,6 +1,12 @@
 Changelog
 ---------
 
+4.2.0 (----------)
+------------------
+
+* Added private field to shortcuts: `__tri_declarative_shortcut_stack`. This is useful to be able to figure out a shortcut stack after the fact.
+
+
 4.0.1 (2019-10-23)
 ------------------
 
