@@ -4,6 +4,10 @@ Changelog
 4.2.0 (----------)
 ------------------
 
+* Fix @with_meta argument injector to merge namespaces
+
+* A minor update to the documentation generation to make it play nice with rST
+
 * Added private field to shortcuts: `__tri_declarative_shortcut_stack`. This is useful to be able to figure out a shortcut stack after the fact
 
 * `get_callable_description` thought stuff that contained a lambda in its string representation was a lambda
