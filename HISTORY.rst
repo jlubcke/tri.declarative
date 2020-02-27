@@ -4,6 +4,8 @@ Changelog
 4.2.0 (----------)
 ------------------
 
+* The namespace merge is narrowed to only affect the @with_meta case.
+
 * Improve namespace merge in @with_meta to not trip up @declarative
 
 * Fix @with_meta argument injector to merge namespaces
