@@ -6,6 +6,8 @@ Changelog
 
 * The namespace merge is narrowed to only affect the @with_meta case.
 
+* Handle calling `Namespace` with `call_target__attribute=None`
+
 * Improve namespace merge in @with_meta to not trip up @declarative
 
 * Fix @with_meta argument injector to merge namespaces

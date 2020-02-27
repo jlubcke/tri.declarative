@@ -308,24 +308,35 @@ def f():
 
 
 def test_namespace_setitem_function():
+    def f():
+        pass
+
     x = Namespace(f=f)
     x.setitem_path('f__x', 17)
     assert x == dict(f=dict(call_target=f, x=17))
 
 
 def test_namespace_setitem_function_backward():
+    def f():
+        pass
+
     x = Namespace(f__x=17)
     x.setitem_path('f', f)
     assert x == dict(f=dict(call_target=f, x=17))
 
 
 def test_namespace_setitem_function_dict():
+    def f():
+        pass
     x = Namespace(f=f)
     x.setitem_path('f', dict(x=17))
     assert x == dict(f=dict(call_target=f, x=17))
 
 
 def test_namespace_setitem_function_non_dict():
+    def f():
+        pass
+
     x = Namespace(f=f)
     x.setitem_path('f', 17)
     assert x == dict(f=17)
@@ -358,7 +369,7 @@ def test_dispatch():
     (Namespace(a__b=1), Namespace(a__c=2), Namespace(a__b=1, a__c=2)),
     (Namespace(x='foo'), Namespace(x__bar=True), Namespace(x__foo=True, x__bar=True)),
     (Namespace(x=u'foo'), Namespace(x__bar=True), Namespace(x__foo=True, x__bar=True)),
-    (Namespace(x=f), Namespace(x__y=1), Namespace(x__call_target=f, x__y=1)),
+    (Namespace(x=sum), Namespace(x__y=1), Namespace(x__call_target=sum, x__y=1)),
     (Namespace(x=dict(y=1)), Namespace(x__z=2), Namespace(x__y=1, x__z=2)),
     (Namespace(x=Namespace(y__z=1)), Namespace(a=Namespace(b__c=2)), Namespace(x__y__z=1, a__b__c=2)),
     (Namespace(y__z="foo"), Namespace(y__z__c=True), Namespace(y__z__foo=True, y__z__c=True)),
@@ -841,6 +852,56 @@ def test_class_shortcut_shortcut():
 
     assert Foo.shortcut1().kwargs == {'x': 17}
     assert Foo.shortcut2().kwargs == {'x': 17, 'y': 42}
+
+
+def test_namespace_call():
+    def bar(arg):
+        return arg
+
+    f = Namespace(
+        call_target=bar,
+        arg='arg'
+    )
+    assert f() == 'arg'
+
+
+def test_namespace_class_call():
+    class Foo:
+        @staticmethod
+        def bar(arg):
+            return arg
+
+    f = Namespace(
+        call_target__cls=Foo,
+        call_target__attribute='bar',
+        arg='arg'
+    )
+    assert f() == 'arg'
+
+
+def test_namespace_call_attribute_missing():
+    class Foo:
+        def __init__(self, arg):
+            self.arg = arg
+
+    f = Namespace(
+        call_target__cls=Foo,
+        arg='arg',
+    )
+    assert f().arg == 'arg'
+
+
+def test_namespace_call_attribute_None():
+    class Foo:
+        def __init__(self, arg):
+            self.arg = arg
+
+    f = Namespace(
+        call_target__cls=Foo,
+        call_target__attribute=None,
+        arg='arg'
+    )
+    assert f().arg == 'arg'
 
 
 def test_refinable_object_complete_example():
