@@ -60,8 +60,8 @@ class ReleaseCheck(Command):
             raise SystemExit(1)
 
         current_branch = check_output(['git', 'rev-parse', '--abbrev-ref', 'HEAD']).strip().decode('utf8')
-        if current_branch != 'master':
-            print('Only release from master')
+        if current_branch != '4.x':
+            print('Only release from 4.x')
             raise SystemExit(1)
 
         print("Ok to distribute files")
