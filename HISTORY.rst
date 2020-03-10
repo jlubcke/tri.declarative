@@ -1,6 +1,12 @@
 Changelog
 ---------
 
+4.3.0 (----------)
+------------------
+
+* Enable `@class_shortcut` to override baseclass shortcuts with the same name.
+
+
 4.2.0 (2020-03-05)
 ------------------
 
