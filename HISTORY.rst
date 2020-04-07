@@ -1,6 +1,12 @@
 Changelog
 ---------
 
+4.4.0 (----------)
+------------------
+
+* Minor bug fix on trailing comma explanation TypeException
+
+
 4.3.0 (2020-04-01)
 ------------------
 
