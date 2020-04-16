@@ -48,7 +48,7 @@ from .util import (
 )
 from .with_meta import with_meta
 
-__version__ = '4.3.0'
+__version__ = '4.4.0'
 
 
 __all__ = [
