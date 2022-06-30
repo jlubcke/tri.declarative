@@ -1,10 +1,12 @@
 from copy import copy
+from typing import Type, TypeVar
 
 from .util import (
     add_args_to_init_call,
     add_init_call_hook,
 )
 
+T = TypeVar("T")
 
 def declarative(member_class=None, parameter='members', add_init_kwargs=True, sort_key=None, is_member=None):
     """
@@ -24,7 +26,7 @@ def declarative(member_class=None, parameter='members', add_init_kwargs=True, so
     if member_class is None and is_member is None:
         raise TypeError("The @declarative decorator needs either a member_class parameter or an is_member check function (or both)")
 
-    def decorator(class_to_decorate):
+    def decorator(class_to_decorate: Type[T]) -> Type[T]:
         class DeclarativeMeta(class_to_decorate.__class__):
             # noinspection PyTypeChecker,PyMethodParameters
             def __init__(cls, name, bases, dict_):
